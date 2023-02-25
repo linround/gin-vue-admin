@@ -15,6 +15,7 @@ type server interface {
 }
 
 func RunWindowsServer() {
+	// 目前配置不使用Redis服务
 	if global.GVA_CONFIG.System.UseMultipoint || global.GVA_CONFIG.System.UseRedis {
 		// 初始化redis服务
 		initialize.Redis()
@@ -22,10 +23,12 @@ func RunWindowsServer() {
 
 	// 从db加载jwt数据
 	if global.GVA_DB != nil {
+		// 这里主要是 读取jwt名单，从而设置黑名单缓存
 		system.LoadAll()
 	}
 
 	Router := initialize.Routers()
+	// 这里是一个静态文件服务
 	Router.Static("/form-generator", "./resource/page")
 
 	address := fmt.Sprintf(":%d", global.GVA_CONFIG.System.Addr)

@@ -22,9 +22,14 @@ func Viper(path ...string) *viper.Viper {
 	var config string
 
 	if len(path) == 0 {
-		flag.StringVar(&config, "c", "", "choose config file.")
+		// 定义了一个命令行参数 -c
+		// 定义其值为 空字符串
+		// 帮助信息为 "选择一个文件"
+		flag.StringVar(&config, "c", "", "选择一个文件")
+		// 对命令行进行解析
 		flag.Parse()
-		if config == "" { // 判断命令行参数是否为空
+		if config == "" {
+			// 获取系统的配置环境 ConfigEnv
 			if configEnv := os.Getenv(internal.ConfigEnv); configEnv == "" { // 判断 internal.ConfigEnv 常量存储的环境变量是否为空
 				switch gin.Mode() {
 				case gin.DebugMode:

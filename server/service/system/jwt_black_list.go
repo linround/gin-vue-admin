@@ -76,6 +76,7 @@ func LoadAll() {
 		global.GVA_LOG.Error("加载数据库jwt黑名单失败!", zap.Error(err))
 		return
 	}
+	// 设置黑名单缓存
 	for i := 0; i < len(data); i++ {
 		global.BlackCache.SetDefault(data[i], struct{}{})
 	} // jwt黑名单 加入 BlackCache 中

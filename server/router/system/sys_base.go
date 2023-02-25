@@ -8,9 +8,11 @@ import (
 type BaseRouter struct{}
 
 func (s *BaseRouter) InitBaseRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
+	// 建立一个base路由组
 	baseRouter := Router.Group("base")
 	baseApi := v1.ApiGroupApp.SystemApiGroup.BaseApi
 	{
+
 		baseRouter.POST("login", baseApi.Login)
 		baseRouter.POST("captcha", baseApi.Captcha)
 	}

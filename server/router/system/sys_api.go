@@ -9,7 +9,9 @@ import (
 type ApiRouter struct{}
 
 func (s *ApiRouter) InitApiRouter(Router *gin.RouterGroup) {
+	// 创建、删除、获取单个、更新、删除选中的api操作会被记录
 	apiRouter := Router.Group("api").Use(middleware.OperationRecord())
+	// 获取所有api、获取api列表这两种操作不会被记录
 	apiRouterWithoutRecord := Router.Group("api")
 	apiRouterApi := v1.ApiGroupApp.SystemApiGroup.SystemApiApi
 	{

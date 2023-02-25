@@ -44,9 +44,12 @@ func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysU
 	if nil == global.GVA_DB {
 		return nil, fmt.Errorf("db not init")
 	}
-
+	// 这里开始查询user信息
 	var user system.SysUser
-	err = global.GVA_DB.Where("username = ?", u.Username).Preload("Authorities").Preload("Authority").First(&user).Error
+	// GORM 提供了 First、Take、Last 方法，以便从数据库中检索单个对象。
+	// 当查询数据库时它添加了 LIMIT 1 条件，且没有找到记录时，它会返回 ErrRecordNotFound 错误
+	err = global.GVA_DB.Where("username = ?", u.Username).First(&user).Error
+	//err = global.GVA_DB.Where("username = ?", u.Username).Preload("Authorities").Preload("Authority").First(&user).Error
 	if err == nil {
 		if ok := utils.BcryptCheck(u.Password, user.Password); !ok {
 			return nil, errors.New("密码错误")

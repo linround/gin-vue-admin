@@ -9,6 +9,8 @@ type DsnProvider interface {
 
 // GeneralDB 也被 Pgsql 和 Mysql 原样使用
 type GeneralDB struct {
+	// 使用为yaml文件进行映射
+	// 配置数据库的信息
 	Path         string `mapstructure:"path" json:"path" yaml:"path"`                               // 服务器地址:端口
 	Port         string `mapstructure:"port" json:"port" yaml:"port"`                               //:端口
 	Config       string `mapstructure:"config" json:"config" yaml:"config"`                         // 高级配置
