@@ -30,7 +30,8 @@ func Viper(path ...string) *viper.Viper {
 		flag.Parse()
 		if config == "" {
 			// 获取系统的配置环境 ConfigEnv
-			if configEnv := os.Getenv(internal.ConfigEnv); configEnv == "" { // 判断 internal.ConfigEnv 常量存储的环境变量是否为空
+			configEnv := os.Getenv(internal.ConfigEnv)
+			if configEnv == "" { // 判断 internal.ConfigEnv 常量存储的环境变量是否为空
 				switch gin.Mode() {
 				case gin.DebugMode:
 					config = internal.ConfigDefaultFile
